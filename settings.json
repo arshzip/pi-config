@@ -1,0 +1,18 @@
+{
+  "lastChangelogVersion": "0.84.4",
+  "theme": "dark",
+  "defaultProvider": "zai",
+  "defaultModel": "glm-5.3-flash",
+  "packages": [
+    "npm:pi-effort",
+    "npm:pi-web-access",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-free",
+    "npm:pi-image-paste",
+    "npm:pi-context-view",
+    "npm:pi-mcp-adapter",
+    "packages/zai-tools-lite",
+    "npm:@juicesharp/rpiv-ask-user-question"
+  ],
+  "hideThinkingBlock": false
+}

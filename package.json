@@ -1,0 +1,11 @@
+{
+	"name": "pi-config",
+	"version": "1.0.0",
+	"description": "My pi coding agent config: extensions, skills, and global instructions",
+	"keywords": ["pi-package"],
+	"license": "MIT",
+	"pi": {
+		"extensions": ["./extensions"],
+		"skills": ["./skills"]
+	}
+}
