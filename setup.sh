@@ -24,6 +24,7 @@ PACKAGES=(
 	pi-context-view
 	pi-mcp-adapter
 	zai-tools-lite
+	@narumitw/pi-plan-mode
 	@juicesharp/rpiv-ask-user-question
 )
 echo "==> installing packages"
@@ -40,24 +41,6 @@ for ext in date-footprint.ts zai-statusline.ts; do
 		echo "  $ext"
 	fi
 done
-
-# ---------------------------------------------------------------- plan-mode (fetch latest from pi upstream)
-echo "==> plan-mode (latest from earendil-works/pi)"
-mkdir -p "$PI_EXT/plan-mode"
-ok=1
-for f in index.ts utils.ts README.md; do
-	curl -fsSL "$PI_RAW/plan-mode/$f" -o "$PI_EXT/plan-mode/$f" || ok=0
-done
-if [ "$ok" -eq 1 ]; then
-	echo "  fetched from pi repo"
-elif [ -d "$(pi --help >/dev/null 2>&1 && dirname "$(dirname "$(readlink -f "$(command -v pi)")")")/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/plan-mode" ]; then
-	# fallback: copy from the locally installed pi package
-	SRC="$(dirname "$(dirname "$(readlink -f "$(command -v pi)")")")/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/plan-mode"
-	cp -R "$SRC/." "$PI_EXT/plan-mode/"
-	echo "  copied from installed pi package"
-else
-	echo "  warning: could not fetch plan-mode — grab it from $PI_RAW/plan-mode" >&2
-fi
 
 # ---------------------------------------------------------------- skills
 # gtasks-cli is vendored here (custom wrapper for BRO3886/gtasks).

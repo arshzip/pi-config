@@ -12,7 +12,8 @@
     "npm:pi-context-view",
     "npm:pi-mcp-adapter",
     "packages/zai-tools-lite",
-    "npm:@juicesharp/rpiv-ask-user-question"
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@narumitw/pi-plan-mode"
   ],
   "hideThinkingBlock": false
 }

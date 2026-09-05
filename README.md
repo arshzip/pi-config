@@ -24,6 +24,6 @@ git clone https://github.com/arshzip/pi-config && cd pi-config && ./setup.sh
 | `setup.sh` | Full setup — pulls everything at latest |
 
 Fetched at latest by `setup.sh`, not vendored:
-- [plan-mode](https://github.com/earendil-works/pi/tree/main/packages/coding-agent/examples/extensions/plan-mode) — from pi's official examples
+- [@narumitw/pi-plan-mode](https://www.npmjs.com/package/@narumitw/pi-plan-mode) — /plan read-only planning mode
 - [android-reverse-engineering](https://github.com/SimoneAvogadro/android-reverse-engineering-skill) — Claude Code plugin; `setup.sh` extracts the inner skill folder into `~/.agents/skills/`
 - All npm packages in `settings.json` + the [gtasks CLI](https://github.com/BRO3886/gtasks)
