@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Setup for arshzip/pi-config — install packages, extensions, and skills.
 # Custom extensions/skills are vendored here; everything with an upstream
-# (pi examples, npm packages, gtasks CLI) is pulled at latest, never vendored.
+# (pi examples, npm packages) is pulled at latest, never vendored.
 set -euo pipefail
 
 PI_AGENT="$HOME/.pi/agent"
@@ -49,7 +49,6 @@ for ext in date-footprint.ts zai-statusline.ts; do
 done
 
 # ---------------------------------------------------------------- skills
-# gtasks-cli is vendored here (custom wrapper for BRO3886/gtasks).
 # android-reverse-engineering comes from its upstream (a Claude Code plugin);
 # CC plugins nest the skill under plugins/<name>/skills/<name>/ — pi wants
 # just that inner SKILL.md folder, so we extract it into the skills dir.
@@ -72,18 +71,6 @@ else
 	rm -rf "$tmp"
 fi
 ls "$SKILLS_DIR" | sed 's/^/  /'
-
-# ---------------------------------------------------------------- gtasks CLI (upstream: BRO3886/gtasks)
-if ! command -v gtasks >/dev/null 2>&1; then
-	if command -v go >/dev/null 2>&1; then
-		echo "==> installing gtasks CLI (go install @latest)"
-		go install github.com/BRO3886/gtasks@latest && echo "  gtasks installed"
-	else
-		echo "  skipping gtasks CLI (no go toolchain) — see https://github.com/BRO3886/gtasks" >&2
-	fi
-else
-	echo "==> gtasks CLI present"
-fi
 
 echo ""
 echo "✅ Setup complete. Restart pi to pick up changes."

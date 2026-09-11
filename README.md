@@ -17,7 +17,6 @@ git clone https://github.com/arshzip/pi-config && cd pi-config && ./setup.sh
 |---|---|
 | `extensions/date-footprint.ts` | Injects current date + timezone into the system prompt (~15 tokens) |
 | `extensions/zai-statusline.ts` | Statusline: z.ai cache hit rate + 5hr limit usage |
-| `skills/gtasks-cli/` | Google Tasks CLI skill (upstream CLI: [BRO3886/gtasks](https://github.com/BRO3886/gtasks)) |
 | `AGENTS.md` | Global instructions |
 | `settings.json` | Reference settings — packages I use (no secrets) |
 | `setup.sh` | Full setup — pulls everything at latest |
@@ -25,4 +24,4 @@ git clone https://github.com/arshzip/pi-config && cd pi-config && ./setup.sh
 Fetched at latest by `setup.sh`, not vendored:
 - [@narumitw/pi-plan-mode](https://www.npmjs.com/package/@narumitw/pi-plan-mode) — /plan read-only planning mode
 - [android-reverse-engineering](https://github.com/SimoneAvogadro/android-reverse-engineering-skill) — Claude Code plugin; `setup.sh` extracts the inner skill folder into `~/.agents/skills/`
-- All npm packages in `settings.json` + the [gtasks CLI](https://github.com/BRO3886/gtasks)
+- All npm packages in `settings.json`
