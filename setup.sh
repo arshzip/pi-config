@@ -38,6 +38,18 @@ for p in "${PACKAGES[@]}"; do
 	pi install "$p" >/dev/null 2>&1 && echo "  installed  $p" || echo "  present    $p"
 done
 
+# ---------------------------------------------------------------- web search config
+# Headless web_search: workflow "none" returns raw results, no curator page.
+# Copied only if absent so API keys added to the live file are never clobbered.
+echo "==> web search config"
+WEB_SEARCH="$PI_AGENT/web-search.json"
+if [ -f "$WEB_SEARCH" ]; then
+	echo "  present    web-search.json (left untouched)"
+else
+	cp "$SCRIPT_DIR/web-search.json" "$WEB_SEARCH"
+	echo "  installed  web-search.json"
+fi
+
 # ---------------------------------------------------------------- custom extensions (vendored)
 echo "==> installing custom extensions"
 mkdir -p "$PI_EXT"

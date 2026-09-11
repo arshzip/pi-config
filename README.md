@@ -19,6 +19,7 @@ git clone https://github.com/arshzip/pi-config && cd pi-config && ./setup.sh
 | `extensions/zai-statusline.ts` | Statusline: z.ai cache hit rate + 5hr limit usage |
 | `AGENTS.md` | Global instructions |
 | `settings.json` | Reference settings — packages I use (no secrets) |
+| `web-search.json` | pi-web-access config — `workflow: "none"` so `web_search` runs headless (raw results, no curator page) |
 | `setup.sh` | Full setup — pulls everything at latest |
 
 Fetched at latest by `setup.sh`, not vendored:
