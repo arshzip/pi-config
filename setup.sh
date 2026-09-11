@@ -14,22 +14,28 @@ command -v pi >/dev/null || { echo "error: pi not found — install it first (ht
 
 echo "==> pi-config setup"
 
-# ---------------------------------------------------------------- packages (npm, latest)
+# ---------------------------------------------------------------- packages (latest; mirrors settings.json)
 PACKAGES=(
-	pi-effort
-	pi-web-access
-	@juicesharp/rpiv-todo
-	pi-free
-	pi-image-paste
-	pi-context-view
-	pi-mcp-adapter
-	zai-tools-lite
-	@narumitw/pi-plan-mode
-	@juicesharp/rpiv-ask-user-question
+	npm:pi-effort
+	npm:pi-web-access
+	npm:@juicesharp/rpiv-todo
+	npm:pi-free
+	npm:pi-image-paste
+	npm:pi-context-view
+	npm:pi-mcp-adapter
+	npm:zai-tools-lite
+	npm:@juicesharp/rpiv-ask-user-question
+	npm:@narumitw/pi-plan-mode
+	npm:pi-tool-display
+	npm:@juanibiapina/pi-tokyonight
+	npm:@pi-kaush/pi-welcome-screen
+	git:github.com/arshzip/no-vertical-padding
+	https://github.com/nicobailon/pi-powerline-footer
+	https://github.com/hasit/pi-community-themes
 )
 echo "==> installing packages"
 for p in "${PACKAGES[@]}"; do
-	pi install "npm:$p" >/dev/null 2>&1 && echo "  installed  $p" || echo "  present    $p"
+	pi install "$p" >/dev/null 2>&1 && echo "  installed  $p" || echo "  present    $p"
 done
 
 # ---------------------------------------------------------------- custom extensions (vendored)

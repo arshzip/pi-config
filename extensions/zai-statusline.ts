@@ -1,8 +1,13 @@
 /**
  * z.ai statusline for pi
  *
- * Shows token-weighted prompt cache hit rate (computed from session usage)
- * and 5hr limit usage from the z.ai quota endpoint (cached 60s).
+ * Format: ⚡ 12% cache · 34% ctx · 5% 5hr limit · resets in 4h49m
+ *
+ * - cache: token-weighted prompt cache hit rate (computed from session usage)
+ * - ctx: live context window usage via ctx.getContextUsage()
+ * - 5hr limit: usage from the z.ai quota endpoint (cached 60s)
+ *
+ * All percentages are colour-coded by usage: green -> yellow -> red.
  */
 
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
@@ -33,13 +38,19 @@ export default function (pi: ExtensionAPI) {
 		if (zaiActive) refreshQuota();
 	}
 
-	function cacheRateText(): string | null {
+	function cacheRate(): number | null {
 		const total = stats.input + stats.cacheRead + stats.cacheWrite;
 		if (!total) return null;
-		return `${Math.round((stats.cacheRead / total) * 100)}%`;
+		return Math.round((stats.cacheRead / total) * 100);
 	}
 
-	function renderStatus(cacheText: string | null, quotaText: string | null) {
+	function usageColor(pct: number): "success" | "warning" | "error" {
+		if (pct >= 85) return "error";
+		if (pct >= 60) return "warning";
+		return "success";
+	}
+
+	function renderStatus(quotaText: string | null) {
 		if (!ctx) return;
 		if (!zaiActive) {
 			ctx.ui.setStatus("zai-statusline", undefined);
@@ -47,14 +58,24 @@ export default function (pi: ExtensionAPI) {
 		}
 		const t = ctx.ui.theme;
 		const parts: string[] = [];
-		if (cacheText) {
-			const pct = parseInt(cacheText, 10);
-			const col = pct >= 80 ? "success" : "warning";
-			parts.push(`⚡ ${t.fg(col, cacheText)}${t.fg("dim", " cache")}`);
+
+		const cache = cacheRate();
+		if (cache != null) {
+			// Higher hit rate is better.
+			const col = cache >= 80 ? "success" : "warning";
+			parts.push(`⚡ ${t.fg(col, `${cache}%`)}${t.fg("dim", " cache")}`);
 		}
+
+		const usage = ctx.getContextUsage();
+		if (usage?.percent != null) {
+			const pct = Math.round(usage.percent);
+			parts.push(`${t.fg(usageColor(pct), `${pct}%`)}${t.fg("dim", " ctx")}`);
+		}
+
 		if (quotaText) lastQuotaText = quotaText;
 		const quota = quotaText ?? lastQuotaText;
 		if (quota) parts.push(quota);
+
 		ctx.ui.setStatus("zai-statusline", parts.length ? parts.join(t.fg("dim", " · ")) : undefined);
 	}
 
@@ -75,8 +96,7 @@ export default function (pi: ExtensionAPI) {
 			reset = h ? `${h}h${String(m).padStart(2, "0")}m` : `${m}m`;
 		}
 		renderStatus(
-			cacheRateText(),
-			`${t.fg(col, `${Math.round(pct)}%`)}${t.fg("dim", ` 5hr limit${reset ? ` · resets in ${reset}` : ""}`)}`,
+			`${t.fg(usageColor(Math.round(pct)), `${Math.round(pct)}%`)}${t.fg("dim", ` 5hr limit${reset ? ` · resets in ${reset}` : ""}`)}`,
 		);
 	}
 
@@ -118,7 +138,7 @@ export default function (pi: ExtensionAPI) {
 	}
 
 	function update() {
-		renderStatus(cacheRateText(), lastQuotaText);
+		renderStatus(lastQuotaText);
 	}
 
 	pi.on("session_start", async (event, sessionCtx) => {
@@ -142,11 +162,14 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	pi.on("message_end", async (event) => {
+		if (!zaiActive) return;
 		const msg: any = event.message;
-		if (!zaiActive || msg?.role !== "assistant" || !msg.usage) return;
-		stats.input += msg.usage.input ?? 0;
-		stats.cacheRead += msg.usage.cacheRead ?? 0;
-		stats.cacheWrite += msg.usage.cacheWrite ?? 0;
+		if (msg?.role === "assistant" && msg.usage) {
+			stats.input += msg.usage.input ?? 0;
+			stats.cacheRead += msg.usage.cacheRead ?? 0;
+			stats.cacheWrite += msg.usage.cacheWrite ?? 0;
+		}
+		// Update on every message so the ctx percentage stays fresh.
 		update();
 	});
 }

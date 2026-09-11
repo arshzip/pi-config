@@ -1,6 +1,29 @@
 {
-  "lastChangelogVersion": "0.84.4",
-  "theme": "dark",
+  "lastChangelogVersion": "0.85.1",
+  "theme": "tokyonight-moon",
+  "powerline": {
+    "preset": "default",
+    "context": {
+      "format": "percent"
+    },
+    "disabledSegments": [
+      "cache_read",
+      "cost"
+    ],
+    "separator": "pipe",
+    "customItems": [
+      {
+        "id": "zai",
+        "statusKey": "zai-statusline",
+        "position": "secondary",
+        "selfColorize": true
+      }
+    ]
+  },
+  "breadcrumb": "inner",
+  "footer": true,
+  "header": true,
+  "header-info": true,
   "defaultProvider": "zai",
   "defaultModel": "glm-5.3-flash",
   "packages": [
@@ -13,7 +36,25 @@
     "npm:pi-mcp-adapter",
     "npm:zai-tools-lite",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@narumitw/pi-plan-mode"
+    "npm:@narumitw/pi-plan-mode",
+    "npm:pi-tool-display",
+    "git:github.com/arshzip/no-vertical-padding",
+    "npm:@juanibiapina/pi-tokyonight",
+    "https://github.com/nicobailon/pi-powerline-footer",
+    "https://github.com/hasit/pi-community-themes",
+    "npm:@pi-kaush/pi-welcome-screen"
   ],
-  "hideThinkingBlock": false
+  "hideThinkingBlock": true,
+  "showCacheMissNotices": true,
+  "enableInstallTelemetry": false,
+  "quietStartup": true,
+  "tuiMode": "fullscreen",
+  "outputPad": 1,
+  "autocompleteMaxVisible": 5,
+  "terminal": {
+    "showTerminalProgress": true
+  },
+  "steeringMode": "all",
+  "fullscreenCopyOnSelect": true,
+  "showLastPrompt": false
 }

@@ -20,7 +20,7 @@ git clone https://github.com/arshzip/pi-config && cd pi-config && ./setup.sh
 | `extensions/zai-statusline.ts` | Statusline: z.ai cache hit rate + 5hr limit usage |
 | `skills/gtasks-cli/` | Google Tasks CLI skill (upstream CLI: [BRO3886/gtasks](https://github.com/BRO3886/gtasks)) |
 | `AGENTS.md` | Global instructions |
-| `settings.json` / `mcp.json` | Reference settings — packages I use + MCP servers (no secrets) |
+| `settings.json` | Reference settings — packages I use (no secrets) |
 | `setup.sh` | Full setup — pulls everything at latest |
 
 Fetched at latest by `setup.sh`, not vendored:
