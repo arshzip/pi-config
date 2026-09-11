@@ -1,12 +1,11 @@
 # pi-config
 
-My [pi](https://pi.dev) coding agent config, published as a pi package.
+My [pi](https://pi.dev) coding agent config
 
-```bash
-pi install git:github.com/arshzip/pi-config
-```
 
-or run the full setup (packages + extensions + skills):
+<img width="75%" alt="Screenshot of Pi Coding Agent" src="https://github.com/user-attachments/assets/74c1f5f7-6b6e-4cfb-9d38-b0a154b3601e" />
+
+## Install
 
 ```bash
 git clone https://github.com/arshzip/pi-config && cd pi-config && ./setup.sh
