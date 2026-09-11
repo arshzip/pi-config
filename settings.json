@@ -3,6 +3,7 @@
   "theme": "tokyonight-moon",
   "powerline": {
     "preset": "default",
+    "welcome": false,
     "context": {
       "format": "percent"
     },
